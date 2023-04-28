@@ -1,8 +1,15 @@
+import SignIn from "./Components/Pages/Sign-In";
+import SignUp from "./Components/Pages/Sign-Up";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div className="App">
-      Katchau      
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/sign-in" element={<SignIn />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
