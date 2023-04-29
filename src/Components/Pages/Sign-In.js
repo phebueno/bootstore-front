@@ -3,7 +3,7 @@ import styled from "styled-components"
 import logo from "../../images/Imagem-Raio-PNG.png"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import REACT_APP_API_URL from "../../URL_Base"
+import URL_Base from "../../URL_Base"
 
 export default function SignIn() {
     const [email, setEmail] = useState()
@@ -16,7 +16,7 @@ export default function SignIn() {
             email,
             password
         }
-        axios.post(`${REACT_APP_API_URL}sign-in`, obj)
+        axios.post(`${URL_Base}sign-in`, obj)
             .then(() => navigate("/"))
             .catch(err => alert(err.response.data))
     }
@@ -27,7 +27,7 @@ export default function SignIn() {
             <Container>
                 <Logo>
                     <div>
-                        <img src={logo} />
+                        <img src={logo} alt=""/>
                         <h1>KaTchau</h1>
                     </div>
                 </Logo>
