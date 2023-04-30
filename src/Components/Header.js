@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import logo from "../images/Imagem-Raio-PNG.png";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  function navigateToSignIn() {
+    navigate("/sign-in");
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -13,7 +20,7 @@ export default function Header() {
 
         <UserArea>
           <FaShoppingCart />
-          <FaUser />
+          <FaUser onClick={navigateToSignIn} />
         </UserArea>
       </Wrapper>
 
