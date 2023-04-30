@@ -1,3 +1,3 @@
-const REACT_APP_API_URL = "https://bootstore-api.onrender.com/"
+const URL_Base = process.env.REACT_APP_API_URL;
 
-export default REACT_APP_API_URL
+export default URL_Base;
