@@ -18,15 +18,15 @@ export default function Header() {
       </Wrapper>
 
       <CategoryWrapper>
-        <p>Categoria Teste</p>
+        <p>Categoria Teste 1</p>
         <VL />
-        <p>Categoria Teste</p>
+        <p>Categoria Teste 2</p>
         <VL />
-        <p>Categoria Teste</p>
+        <p>Categoria Teste 3</p>
         <VL />
-        <p>Categoria Teste</p>
+        <p>Categoria Teste 4</p>
         <VL />
-        <p>Categoria Teste</p>
+        <p>Categoria Teste 5</p>
       </CategoryWrapper>
     </Container>
   );
