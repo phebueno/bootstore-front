@@ -34,7 +34,7 @@ export default function Cart() {
 
   function checkout() {
     let address = prompt("Digite o endereço de entrega")
-    while (address === "") {
+    while (!address) {
       alert("Endereço de entrega é obrigatorio")
       address = prompt("Digite o endereço de entrega")
     }
