@@ -8,6 +8,16 @@ import CartProduct from "../CartProduct.js";
 export default function Cart() {
   const [cart, setCart] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+
+  function updateCart(arr){
+    const subTotal = arr.reduce(
+      (accumulator, currentValue) =>
+        accumulator + currentValue.value*currentValue.qty,
+      0
+    );
+    return subTotal;
+  }
+  
   useEffect(() => {
     //adicionar validação de usuário site
     //Authorization: `Bearer ${JSON.parse(token)}
@@ -23,16 +33,11 @@ export default function Cart() {
       .get(url, config)
       .then((res) => {
         console.log("OK!");
-        setCart(res.data);
-        const subTotal = res.data.reduce(
-          (accumulator, currentValue) =>
-            accumulator + currentValue.value*currentValue.qty,
-          0
-        );
-        setSubTotal(subTotal);
+        setCart(res.data);        
+        setSubTotal(()=>updateCart(res.data))
       })
       .catch((err) => console.log(err.response));
-  }, []);
+  }, []);  
 
   function increaseCounter(id) {
     const newCount = cart.map((item) => {
@@ -41,7 +46,8 @@ export default function Cart() {
       }
       return item;
     });
-    setCart(newCount);
+    setCart(newCount);    
+    setSubTotal(()=>updateCart(newCount));
   }
 
   function decreaseCounter(id) {
@@ -52,6 +58,7 @@ export default function Cart() {
       return product;
     });
     setCart(newCount);
+    setSubTotal(()=>updateCart(newCount))
   }
 
   function saveCart() {

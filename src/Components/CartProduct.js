@@ -50,7 +50,7 @@ export default function CartProduct({ product, increaseCounter, decreaseCounter 
           <TrashStyle />
         </div>
       </ProductSubInfo>
-      <ItemValue>R$ {value.toFixed(2).toString().replace(".", ",")}</ItemValue>
+      <ItemValue>R$ {(value*qty).toFixed(2).toString().replace(".", ",")}</ItemValue>
     </ProductBox>
   );
 }
