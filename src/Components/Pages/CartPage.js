@@ -7,6 +7,7 @@ import CartProduct from "../CartProduct.js";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
+  const [subTotal, setSubTotal] = useState(0);
   useEffect(() => {
     //adicionar validação de usuário site
     //Authorization: `Bearer ${JSON.parse(token)}
@@ -23,7 +24,12 @@ export default function Cart() {
       .then((res) => {
         console.log("OK!");
         setCart(res.data);
-        console.log(res.data);
+        const subTotal = res.data.reduce(
+          (accumulator, currentValue) =>
+            accumulator + currentValue.value*currentValue.qty,
+          0
+        );
+        setSubTotal(subTotal);
       })
       .catch((err) => console.log(err.response));
   }, []);
@@ -89,7 +95,7 @@ export default function Cart() {
               </ButtonContainer>
               <SubTotalValue>
                 <span>Subtotal:</span>
-                <strong>R$ 10,00</strong>
+                <strong>R$ {subTotal.toFixed(2).toString().replace(".", ",")}</strong>
               </SubTotalValue>
             </ProductsContainer>
           )}
@@ -98,7 +104,7 @@ export default function Cart() {
           <CheckoutInfoList>
             <div>
               <span>Subtotal:</span>
-              <strong>R$ 10,00</strong>
+              <strong>R$ {subTotal.toFixed(2).toString().replace(".", ",")}</strong>
             </div>
             <div>
               <span>Frete:</span>
@@ -112,7 +118,7 @@ export default function Cart() {
           <Section></Section>
           <TotalValue>
             <span>Total:</span>
-            <strong>R$ 0,00</strong>
+            <strong>R$ {subTotal.toFixed(2).toString().replace(".", ",")}</strong>
           </TotalValue>
           <button>Checkout</button>
         </CheckoutBox>

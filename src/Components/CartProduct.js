@@ -6,7 +6,7 @@ import axios from "axios";
 import URL_Base from "../URL_Base.js";
 
 export default function CartProduct({ product, increaseCounter, decreaseCounter }) {
-  const { productId, name, qty } = product;
+  const { productId, name, qty, value } = product;
 
   function deleteProduct() {
     const token = "tokensupersecretomelhorainda159951";
@@ -50,7 +50,7 @@ export default function CartProduct({ product, increaseCounter, decreaseCounter 
           <TrashStyle />
         </div>
       </ProductSubInfo>
-      <ItemValue>RS 5,00</ItemValue>
+      <ItemValue>R$ {value.toFixed(2).toString().replace(".", ",")}</ItemValue>
     </ProductBox>
   );
 }
