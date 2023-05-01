@@ -27,6 +27,45 @@ export default function Cart() {
       })
       .catch((err) => console.log(err.response));
   }, []);
+
+  function increaseCounter(id) {
+    const newCount = cart.map((item) => {
+      if (item.productId === id) {
+        return {...item, qty: item.qty+1}
+      }
+      return item;
+    });
+    setCart(newCount);
+  }
+
+  function decreaseCounter(id) {
+    const newCount = cart.map((product) => {
+      if (product.productId === id) {
+        if (product.qty>1) return {...product, qty: product.qty-1}
+      }
+      return product;
+    });
+    setCart(newCount);
+  }
+
+  function saveCart() {
+    const token = "tokensupersecretomelhorainda159951";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body = cart.map(({productId,qty})=>({productId,qty}));
+    const url = `${URL_Base}cart`;
+    axios
+      .put(url, {productIdList: body}, config)
+      .then((res) => {
+        console.log("OK!");
+        //Substituir por update local depois
+        window.location.reload(false);
+      })
+      .catch((err) => console.log(err.response));
+  }
   return (
     <>
       <div>Carrinho</div>
@@ -37,11 +76,16 @@ export default function Cart() {
             <ProductsContainer>
               <ul>
                 {cart.map((product, index) => (
-                  <CartProduct key={index} product={product} />
+                  <CartProduct
+                    key={index}
+                    product={product}
+                    increaseCounter={increaseCounter}
+                    decreaseCounter={decreaseCounter}
+                  />
                 ))}
               </ul>
               <ButtonContainer>
-                <button>Salvar o carrinho</button>
+                <button onClick={saveCart}>Salvar o carrinho</button>
               </ButtonContainer>
               <SubTotalValue>
                 <span>Subtotal:</span>
@@ -97,7 +141,7 @@ const ButtonContainer = styled.div`
     color: #ffffff;
     border: 0;
     border-radius: 7px;
-    margin-right:20px;
+    margin-right: 20px;
     height: 30px;
     width: 200px;
     cursor: pointer;

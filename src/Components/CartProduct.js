@@ -2,20 +2,11 @@ import logo from "../images/Imagem-Raio-PNG.png";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
-import { useState } from "react";
 import axios from "axios";
 import URL_Base from "../URL_Base.js";
 
-export default function CartProduct({ product }) {
+export default function CartProduct({ product, increaseCounter, decreaseCounter }) {
   const { productId, name, qty } = product;
-  const [counter, setCounter] = useState(qty);
-  function increaseCounter() {
-    setCounter((count) => count + 1);
-  }
-
-  function decreaseCounter() {
-    if (counter > 1) setCounter((count) => count - 1);
-  }
 
   function deleteProduct() {
     const token = "tokensupersecretomelhorainda159951";
@@ -49,9 +40,9 @@ export default function CartProduct({ product }) {
       </ProductInfo>
       <ProductSubInfo>
         <p>Quantidade:</p>
-        <MinusCircleStyle onClick={decreaseCounter} />
-        <p>{counter}</p>
-        <PlusCircleStyle onClick={increaseCounter} />
+        <MinusCircleStyle onClick={() => decreaseCounter(productId)} />
+        <p>{qty}</p>
+        <PlusCircleStyle onClick={() => increaseCounter(productId)} />
       </ProductSubInfo>
       <ProductSubInfo>
         <div onClick={deleteProduct}>
