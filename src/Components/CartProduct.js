@@ -3,18 +3,41 @@ import styled from "styled-components";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
 import { useState } from "react";
+import axios from "axios";
+import URL_Base from "../URL_Base.js";
 
 export default function CartProduct({ product }) {
-  const [counter, setCounter] = useState(1);
-  function increaseCounter(){
+  const { productId, name, qty } = product;
+  const [counter, setCounter] = useState(qty);
+  function increaseCounter() {
     setCounter((count) => count + 1);
-  };
+  }
 
-  function decreaseCounter(){
+  function decreaseCounter() {
     if (counter > 1) setCounter((count) => count - 1);
-  };
+  }
 
-  const { name } = product;
+  function deleteProduct() {
+    const token = "tokensupersecretomelhorainda159951";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(productId);
+    const url = `${URL_Base}cart/${productId}`;
+    axios
+      .delete(url, config)
+      .then((res) => {
+        console.log("OK!");
+        console.log(res.data);
+        //Substituir por update local depois
+        window.location.reload(false);
+
+      })
+      .catch((err) => console.log(err.response));
+  }
+
   return (
     <ProductBox>
       <ProductInfo>
@@ -31,7 +54,7 @@ export default function CartProduct({ product }) {
         <PlusCircleStyle onClick={increaseCounter} />
       </ProductSubInfo>
       <ProductSubInfo>
-        <div>
+        <div onClick={deleteProduct}>
           <p>Remover</p>
           <TrashStyle />
         </div>
@@ -79,10 +102,10 @@ const ProductSubInfo = styled.div`
   display: flex;
   font-size: 20px;
   gap: 5px;
-  div{
+  div {
     cursor: pointer;
-    display:flex;
-    gap:10px;
+    display: flex;
+    gap: 10px;
   }
 `;
 

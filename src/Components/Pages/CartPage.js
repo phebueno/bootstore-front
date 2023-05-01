@@ -23,6 +23,7 @@ export default function Cart() {
       .then((res) => {
         console.log("OK!");
         setCart(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err.response));
   }, []);
@@ -35,10 +36,13 @@ export default function Cart() {
           {cart && cart.length > 0 && (
             <ProductsContainer>
               <ul>
-                {cart.map((product) => (
-                  <CartProduct product={product} />
+                {cart.map((product, index) => (
+                  <CartProduct key={index} product={product} />
                 ))}
               </ul>
+              <ButtonContainer>
+                <button>Salvar o carrinho</button>
+              </ButtonContainer>
               <SubTotalValue>
                 <span>Subtotal:</span>
                 <strong>R$ 10,00</strong>
@@ -75,6 +79,8 @@ export default function Cart() {
 
 const SubTotalValue = styled.div`
   display: flex;
+  width: 100%;
+  box-sizing: border-box;
   gap: 30px;
   border-top: 1px solid #ccc;
   justify-content: flex-end;
@@ -82,11 +88,27 @@ const SubTotalValue = styled.div`
   font-size: 23px;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  button {
+    background-color: #f75a05;
+    color: #ffffff;
+    border: 0;
+    border-radius: 7px;
+    margin-right:20px;
+    height: 30px;
+    width: 200px;
+    cursor: pointer;
+  }
+`;
+
 const ProductsContainer = styled.div`
   display: flex;
-  height: inherit;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
   ul {
     display: flex;
     flex-direction: column;
@@ -100,11 +122,13 @@ const ProductList = styled.section`
   min-height: 100px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  display: flex;
+  //flex-direction:column;
+  justify-content: center;
 `;
 
 const Aviso = styled.div`
   display: flex;
-  height: inherit;
   align-items: center;
   justify-content: center;
 `;
@@ -131,7 +155,7 @@ const CheckoutInfoList = styled.div`
 
 const CheckoutBox = styled.aside`
   flex: 0 0 300px;
-  height: 300px;
+  height: 250px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   padding: 30px;
