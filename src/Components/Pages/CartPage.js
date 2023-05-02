@@ -91,7 +91,7 @@ export default function Cart({ user, setUser }) {
   }
 
   function checkout() {
-    if (cart.length === 0) return alert("Seu carrinho está vazio!");
+    if (!cart || cart.length === 0) return alert("Seu carrinho está vazio!");
     let address = prompt("Digite o endereço de entrega");
     while (!address) {
       alert("Endereço de entrega é obrigatorio");
@@ -114,11 +114,8 @@ export default function Cart({ user, setUser }) {
         Authorization: `Bearer ${token}`,
       },
     };
-    cart.forEach((object) => {
-      delete object["category"];
-      delete object["url"];
-    });
-    const body = { address, productIdList: cart, total: Number(subTotal) };
+    const arrayClean = cart.map(({name, productId, qty, value}) => ({name, productId, qty, value}));
+    const body = { address, productIdList: arrayClean, total: Number(subTotal) };
     const url = `${URL_Base}/checkout`;
     axios
       .post(url, body, config)

@@ -10,7 +10,6 @@ export default function ProductCard(props) {
     const userAuth = localStorage.getItem("userAuth");
     if (!userAuth) return navigate("/sign-in");
     const { token } = JSON.parse(userAuth);
-    console.log(token);
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
