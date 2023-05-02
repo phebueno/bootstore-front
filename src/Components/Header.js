@@ -26,6 +26,10 @@ export default function Header() {
     navigate("/");
   }
 
+  function navigateToShoppingCart() {
+    navigate("/cart");
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -35,7 +39,7 @@ export default function Header() {
         </Logo>
 
         <UserArea>
-          <FaShoppingCart />
+          <FaShoppingCart onClick={navigateToShoppingCart} />
           <FaUser onClick={navigateToSignIn} />
         </UserArea>
       </Wrapper>

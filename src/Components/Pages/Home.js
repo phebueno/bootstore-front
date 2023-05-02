@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Header from "../Header.js";
 import ProductCard from "../ProductCard.js";
 import { useEffect, useState } from "react";
-import REACT_APP_API_URL from "../../URL_Base.js";
+import URL_Base from "../../URL_Base.js";
 import axios from "axios";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get(`${REACT_APP_API_URL}/home`)
+      .get(`${URL_Base}/home`)
       .then((res) => {
         setProducts(res.data);
       })
@@ -45,8 +45,6 @@ const Content = styled.div`
 `;
 
 const ProductsWrapper = styled.div`
-  /* background: white; */
-
   width: 90%;
   padding: 0 30px;
   gap: 30px;

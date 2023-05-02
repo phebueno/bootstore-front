@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Header from "../Header.js";
 import ProductCard from "../ProductCard.js";
 import { useEffect, useState } from "react";
-import REACT_APP_API_URL from "../../URL_Base.js";
+import URL_Base from "../../URL_Base.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -12,7 +12,7 @@ export default function HomeCategory() {
 
   useEffect(() => {
     axios
-      .get(`${REACT_APP_API_URL}/home/${category}`)
+      .get(`${URL_Base}/home/${category}`)
       .then((res) => {
         setProducts(res.data);
       })
