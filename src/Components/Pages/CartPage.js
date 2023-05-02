@@ -205,7 +205,7 @@ export default function Cart() {
 const BlurGray = styled.div`
   position: absolute;
   display: ${(props) => props.display};
-  z-index: 3;
+  z-index: 101;
   top: 0;
   left: 0;
   width: 100%;
