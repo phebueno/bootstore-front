@@ -86,6 +86,7 @@ export default function Cart() {
   }
 
   function checkout() {
+    if(cart.length===0) return alert("Seu carrinho está vazio!");
     let address = prompt("Digite o endereço de entrega");
     while (!address) {
       alert("Endereço de entrega é obrigatorio");
@@ -102,6 +103,7 @@ export default function Cart() {
 
   function confirmOrder() {
     setConfirm(true);
+    //Código de enviar carrinho para o checkout
   }
 
   return (
@@ -174,14 +176,23 @@ export default function Cart() {
           </Logo>
 
           <Form>
-            <h1>{`Comprador: ${"ivan"}`}</h1>
-            <h1>{`Endereço de entrega: ${address}`}</h1>
+            <h1>Comprador:</h1>
+            <p>{"ivan"}</p>
+            <h1>Endereço de entrega:</h1>
+            <p>{address}</p>
+            <h1>Itens da entrega:</h1>
             <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
+              {cart.map((product, index) => (
+                <li key={index}>
+                  {product.qty}x {product.name}
+                </li>
+              ))}
             </ul>
-            <h1>{`Total: 20`}</h1>
+            <h1>Total:</h1>{" "}
+            <p>
+              R$
+              {subTotal.toFixed(2).toString().replace(".", ",")}
+            </p>
           </Form>
           <button onClick={confirmOrder}>Confirmar Pedido</button>
         </Check>
@@ -210,12 +221,12 @@ const BlurGray = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  font-family: "Bruno Ace SC", cursive;
+  font-family: "Roboto", sans-serif;
   background-color: rgba(199, 199, 199, 0.5);
 `;
 
 const Check = styled.div`
-  width: 600px;
+  width: 400px;
   height: 450px;
   position: absolute;
   top: 50%;
@@ -270,14 +281,19 @@ const Logo = styled.div`
 
 const Form = styled.form`
   height: 55%;
-  width: 98%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 10px;
-  h1,
-  li {
+  h1 {
     font-size: 20px;
+    font-family: "Bruno Ace SC", cursive;
+    font-weight: bold;
+  }
+  p, li{
+    font-size: 20px;
+    margin-left:2%;
   }
 `;
 
