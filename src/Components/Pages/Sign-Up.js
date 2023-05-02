@@ -20,7 +20,7 @@ export default function SignUp() {
             email,
             password
         }
-        axios.post(`${URL_Base}sign-up`, obj)
+        axios.post(`${URL_Base}/sign-up`, obj)
             .then(() => navigate("/sign-in"))
             .catch(err => alert(err.response.data))
     }

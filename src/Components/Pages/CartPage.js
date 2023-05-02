@@ -36,7 +36,7 @@ export default function Cart({user, setUser}) {
       },
     };
 
-    const url = `${URL_Base}cart`;
+    const url = `${URL_Base}/cart`;
     axios
       .get(url, config)
       .then((res) => {
@@ -80,7 +80,7 @@ export default function Cart({user, setUser}) {
       },
     };
     const body = cart.map(({ productId, qty }) => ({ productId, qty }));
-    const url = `${URL_Base}cart`;
+    const url = `${URL_Base}/cart`;
     axios
       .put(url, { productIdList: body }, config)
       .then((res) => {
@@ -116,7 +116,7 @@ export default function Cart({user, setUser}) {
       },
     };
     const body = {address, productIdList: cart, total:Number(subTotal) };
-    const url = `${URL_Base}checkout`;
+    const url = `${URL_Base}/checkout`;
     axios
       .post(url, body, config)
       .then((res) => {

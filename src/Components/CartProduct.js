@@ -18,7 +18,7 @@ export default function CartProduct({ product, increaseCounter, decreaseCounter 
       },
     };
     console.log(productId);
-    const url = `${URL_Base}cart/${productId}`;
+    const url = `${URL_Base}/cart/${productId}`;
     axios
       .delete(url, config)
       .then((res) => {

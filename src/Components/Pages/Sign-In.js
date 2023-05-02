@@ -17,7 +17,7 @@ export default function SignIn({setUser}) {
       password,
     };
     axios
-      .post(`${URL_Base}sign-in`, obj)
+      .post(`${URL_Base}/sign-in`, obj)
       .then((res) => {
         const dadosSerializados = JSON.stringify(res.data);
         localStorage.setItem("userAuth", dadosSerializados);
