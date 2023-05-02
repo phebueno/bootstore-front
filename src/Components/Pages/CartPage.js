@@ -26,8 +26,9 @@ export default function Cart({user, setUser}) {
   }
 
   useEffect(() => {
-    const {token, userName} = JSON.parse(localStorage.getItem("userAuth"));
-    if(!token) navigate("/sign-in");
+    const userAuth = localStorage.getItem("userAuth");
+    if(!userAuth) return navigate("/sign-in");
+    const {token, userName} = JSON.parse(userAuth);    
     if(!user) setUser(userName); //se mudar o caminho da sessão, tenta obter o usuário pelo localStorage
     const config = {
       headers: {
@@ -442,7 +443,7 @@ const CheckoutBox = styled.aside`
 
 const CartPageContent = styled.main`
   //Retirar display flex para versão mobile
-  margin-top: 180px;
+  margin: 180px 0 30px;
   display: flex;
   width: 100%;
   gap: 10px;
