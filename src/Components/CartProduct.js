@@ -2,19 +2,33 @@ import logo from "../images/Imagem-Raio-PNG.png";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
-import { useState } from "react";
+import axios from "axios";
+import URL_Base from "../URL_Base.js";
 
-export default function CartProduct({ product }) {
-  const [counter, setCounter] = useState(1);
-  function increaseCounter(){
-    setCounter((count) => count + 1);
-  };
+export default function CartProduct({ product, increaseCounter, decreaseCounter }) {
+  const { productId, name, qty, value } = product;
 
-  function decreaseCounter(){
-    if (counter > 1) setCounter((count) => count - 1);
-  };
+  function deleteProduct() {
+    const token = "tokensupersecretomelhorainda159951";
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    console.log(productId);
+    const url = `${URL_Base}cart/${productId}`;
+    axios
+      .delete(url, config)
+      .then((res) => {
+        console.log("OK!");
+        console.log(res.data);
+        //Substituir por update local depois
+        window.location.reload(false);
 
-  const { name } = product;
+      })
+      .catch((err) => console.log(err.response));
+  }
+
   return (
     <ProductBox>
       <ProductInfo>
@@ -26,17 +40,17 @@ export default function CartProduct({ product }) {
       </ProductInfo>
       <ProductSubInfo>
         <p>Quantidade:</p>
-        <MinusCircleStyle onClick={decreaseCounter} />
-        <p>{counter}</p>
-        <PlusCircleStyle onClick={increaseCounter} />
+        <MinusCircleStyle onClick={() => decreaseCounter(productId)} />
+        <p>{qty}</p>
+        <PlusCircleStyle onClick={() => increaseCounter(productId)} />
       </ProductSubInfo>
       <ProductSubInfo>
-        <div>
+        <div onClick={deleteProduct}>
           <p>Remover</p>
           <TrashStyle />
         </div>
       </ProductSubInfo>
-      <ItemValue>RS 5,00</ItemValue>
+      <ItemValue>R$ {(value*qty).toFixed(2).toString().replace(".", ",")}</ItemValue>
     </ProductBox>
   );
 }
@@ -79,10 +93,10 @@ const ProductSubInfo = styled.div`
   display: flex;
   font-size: 20px;
   gap: 5px;
-  div{
+  div {
     cursor: pointer;
-    display:flex;
-    gap:10px;
+    display: flex;
+    gap: 10px;
   }
 `;
 
