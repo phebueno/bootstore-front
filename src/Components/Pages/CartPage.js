@@ -6,13 +6,15 @@ import URL_Base from "../../URL_Base.js";
 import logo from "../../images/Imagem-Raio-PNG.png";
 import CartProduct from "../CartProduct.js";
 import Header from "../Header.js";
+import { useNavigate } from "react-router-dom";
 
-export default function Cart() {
+export default function Cart({user, setUser}) {
   const [cart, setCart] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [address, setAddress] = useState(null);
   const [open, setOpen] = useState("none");
   const [confirm, setConfirm] = useState(false);
+  const navigate = useNavigate();
 
   function updateCart(arr) {
     const subTotal = arr.reduce(
@@ -24,9 +26,9 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    //adicionar validação de usuário site
-    //Authorization: `Bearer ${JSON.parse(token)}
-    const token = "tokensupersecretomelhorainda159951";
+    const {token, userName} = JSON.parse(localStorage.getItem("userAuth"));
+    if(!token) navigate("/sign-in");
+    if(!user) setUser(userName); //se mudar o caminho da sessão, tenta obter o usuário pelo localStorage
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -42,7 +44,7 @@ export default function Cart() {
         setSubTotal(() => updateCart(res.data));
       })
       .catch((err) => console.log(err.response));
-  }, []);
+  }, [user, setUser, navigate]);
 
   function increaseCounter(id) {
     const newCount = cart.map((item) => {
@@ -67,7 +69,7 @@ export default function Cart() {
   }
 
   function saveCart() {
-    const token = "tokensupersecretomelhorainda159951";
+    const {token} = JSON.parse(localStorage.getItem("userAuth"));
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -177,7 +179,7 @@ export default function Cart() {
 
           <Form>
             <h1>Comprador:</h1>
-            <p>{"ivan"}</p>
+            <p>{user}</p>
             <h1>Endereço de entrega:</h1>
             <p>{address}</p>
             <h1>Itens da entrega:</h1>
