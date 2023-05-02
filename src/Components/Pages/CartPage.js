@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import styled from "styled-components";
 import URL_Base from "../../URL_Base.js";
 import CartProduct from "../CartProduct.js";
+import Header from "../Header.js";
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
@@ -17,7 +18,7 @@ export default function Cart() {
     );
     return subTotal;
   }
-  
+
   useEffect(() => {
     //adicionar validação de usuário site
     //Authorization: `Bearer ${JSON.parse(token)}
@@ -82,6 +83,7 @@ export default function Cart() {
   return (
     <>
       <div>Carrinho</div>
+      <Header/>
       <CartPageContent>
         <ProductList>
           {cart && cart.length === 0 && <Aviso>Seu carinho está vazio!</Aviso>}
@@ -150,6 +152,7 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
   margin-bottom: 20px;
   button {
+    font-family: "Bruno Ace SC", cursive;
     background-color: #f75a05;
     color: #ffffff;
     border: 0;
@@ -191,10 +194,13 @@ const Aviso = styled.div`
 `;
 
 const Section = styled.div`
-  border: 1px solid black;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
 `;
 
 const TotalValue = styled.div`
+  
+
   display: flex;
   justify-content: space-between;
   font-weight: bold;
@@ -212,7 +218,7 @@ const CheckoutInfoList = styled.div`
 
 const CheckoutBox = styled.aside`
   flex: 0 0 300px;
-  height: 250px;
+  height: 300px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
   padding: 30px;
@@ -234,6 +240,7 @@ const CheckoutBox = styled.aside`
 
 const CartPageContent = styled.main`
   //Retirar display flex para versão mobile
+  margin-top:150px;
   display: flex;
   width: 100%;
   gap: 10px;
