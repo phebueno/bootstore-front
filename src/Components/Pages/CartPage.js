@@ -41,7 +41,6 @@ export default function Cart({ user, setUser }) {
     axios
       .get(url, config)
       .then((res) => {
-        console.log("OK!");
         setCart(res.data);
         setSubTotal(() => updateCart(res.data));
       })
@@ -85,7 +84,6 @@ export default function Cart({ user, setUser }) {
     axios
       .put(url, { productIdList: body }, config)
       .then((res) => {
-        console.log("OK!");
         //Substituir por update local depois
         window.location.reload(false);
       })
@@ -120,16 +118,14 @@ export default function Cart({ user, setUser }) {
       delete object["category"];
       delete object["url"];
     });
-    console.log(cart);
     const body = { address, productIdList: cart, total: Number(subTotal) };
     const url = `${URL_Base}/checkout`;
     axios
       .post(url, body, config)
       .then((res) => {
-        console.log("OK!");
         setTimeout(() => {
           window.location.reload(false);
-        }, 3000);
+        }, 1500);
       })
       .catch((err) => {
         console.log(err.response);
