@@ -33,7 +33,7 @@ export default function ProductCard(props) {
       <ProductImage src={props.img} />
       <Description>
         <p>{props.name}</p>
-        <p>R$ {props.price}</p>
+        <p>R$ {props.price.toFixed(2).toString().replace(".", ",")}</p>
       </Description>
       <ToCart onClick={() => addToCart(props.id)}>Adicionar ao carrinho</ToCart>
     </Container>

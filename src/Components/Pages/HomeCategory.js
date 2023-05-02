@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import URL_Base from "../../URL_Base.js";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
 
 export default function HomeCategory() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState();
   const { category } = useParams();
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function HomeCategory() {
       <Header />
       <Content>
         <ProductsWrapper>
+        {!products && <Oval color="#F07622" secondaryColor="#FEEC2C"/>}
           {products &&
             products.map((product) => (
               <ProductCard
