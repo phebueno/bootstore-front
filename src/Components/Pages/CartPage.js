@@ -43,7 +43,10 @@ export default function Cart({user, setUser}) {
         setCart(res.data);
         setSubTotal(() => updateCart(res.data));
       })
-      .catch((err) => console.log(err.response));
+      .catch((err) => {
+        console.log(err.response);
+        if(err.response.status===401) navigate("/sign-in");
+      });
   }, [user, setUser, navigate]);
 
   function increaseCounter(id) {
@@ -105,12 +108,29 @@ export default function Cart({user, setUser}) {
 
   function confirmOrder() {
     setConfirm(true);
-    //Código de enviar carrinho para o checkout
+    const {token} = JSON.parse(localStorage.getItem("userAuth"));
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const body = {address, productIdList: cart, total:Number(subTotal) };
+    const url = `${URL_Base}checkout`;
+    axios
+      .post(url, body, config)
+      .then((res) => {
+        console.log("OK!");
+        //Substituir por update local depois
+        window.location.reload(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert('Algo deu errado com o seu pedido! Tente novamente.')
+      });
   }
 
   return (
     <>
-      <div>Carrinho</div>
       <Header />
       <CartPageContent>
         <ProductList>
@@ -422,7 +442,7 @@ const CheckoutBox = styled.aside`
 
 const CartPageContent = styled.main`
   //Retirar display flex para versão mobile
-  margin-top: 150px;
+  margin-top: 180px;
   display: flex;
   width: 100%;
   gap: 10px;
