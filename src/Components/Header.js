@@ -10,6 +10,22 @@ export default function Header() {
     navigate("/sign-in");
   }
 
+  function navigateToAcessories() {
+    navigate("/home/perifericos");
+  }
+
+  function navigateToEletronics() {
+    navigate("/home/eletronicos");
+  }
+
+  function navigateToCellPhones() {
+    navigate("/home/celulares");
+  }
+
+  function navigateToHome() {
+    navigate("/");
+  }
+
   function navigateToShoppingCart() {
     navigate("/cart");
   }
@@ -19,7 +35,7 @@ export default function Header() {
       <Wrapper>
         <Logo>
           <img src={logo} alt="" />
-          <h1>KaTchau</h1>
+          <h1 onClick={navigateToHome}>KaTchau</h1>
         </Logo>
 
         <UserArea>
@@ -29,15 +45,11 @@ export default function Header() {
       </Wrapper>
 
       <CategoryWrapper>
-        <p>Categoria Teste 1</p>
+        <p onClick={navigateToAcessories}>perifericos</p>
         <VL />
-        <p>Categoria Teste 2</p>
+        <p onClick={navigateToEletronics}>eletronicos</p>
         <VL />
-        <p>Categoria Teste 3</p>
-        <VL />
-        <p>Categoria Teste 4</p>
-        <VL />
-        <p>Categoria Teste 5</p>
+        <p onClick={navigateToCellPhones}>celulares</p>
       </CategoryWrapper>
     </Container>
   );
@@ -77,6 +89,7 @@ const Logo = styled.div`
   font-weight: 700;
   font-size: 44px;
   color: #ffffff;
+  cursor: pointer;
   img {
     width: 80px;
   }
