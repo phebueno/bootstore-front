@@ -5,17 +5,21 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
-  const lsDados = localStorage.getItem("userAuth")
+  const lsDados = localStorage.getItem("userAuth");
 
   function navigateToSignIn() {
     if (lsDados) {
       if (window.confirm("Voce deseja sair da sua conta?")) {
-        localStorage.removeItem("userAuth")
-        navigate("/sign-in")
+        localStorage.removeItem("userAuth");
+        navigate("/");
       }
     } else {
-      navigate("/sign-in");
+      navigate("/");
     }
+  }
+
+  function navigateToLogin() {
+    navigate("/sign-in");
   }
 
   function navigateToAcessories() {
@@ -48,7 +52,11 @@ export default function Header() {
 
         <UserArea>
           <FaShoppingCart onClick={navigateToShoppingCart} />
-          <FaUser onClick={navigateToSignIn} />
+          {!localStorage.getItem("userAuth") ? (
+            <Login onClick={navigateToLogin}>LOGAR</Login>
+          ) : (
+            <FaUser onClick={navigateToSignIn} />
+          )}
         </UserArea>
       </Wrapper>
 
@@ -136,4 +144,16 @@ const CategoryWrapper = styled.div`
 const VL = styled.div`
   border-left: 4px solid black;
   height: 100%;
+`;
+
+const Login = styled.div`
+  background: none;
+  border: 2px solid white;
+  border-radius: 5px;
+  padding: 5px;
+
+  font-family: "Bruno Ace SC", cursive;
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
 `;
