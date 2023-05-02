@@ -1,4 +1,3 @@
-import logo from "../images/Imagem-Raio-PNG.png";
 import styled from "styled-components";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
@@ -7,7 +6,7 @@ import URL_Base from "../URL_Base.js";
 import { useNavigate } from "react-router-dom";
 
 export default function CartProduct({ product, increaseCounter, decreaseCounter }) {
-  const { productId, name, qty, value } = product;
+  const { productId, name, qty, value, url } = product;
   const navigate = useNavigate();
 
   function deleteProduct() {
@@ -35,10 +34,9 @@ export default function CartProduct({ product, increaseCounter, decreaseCounter 
   return (
     <ProductBox>
       <ProductInfo>
-        <img src={logo} alt="" />
+        <img src={url} alt="" />
         <span>
           <div>{name}</div>
-          <p>Gamer</p>
         </span>
       </ProductInfo>
       <ProductSubInfo>
@@ -60,6 +58,7 @@ export default function CartProduct({ product, increaseCounter, decreaseCounter 
 
 const ProductInfo = styled.div`
   display: flex;
+  align-items:center;
   gap: 20px;
   div {
     min-width: 150px;
@@ -111,5 +110,6 @@ const ProductBox = styled.div`
   img {
     width: 80px;
     height: 80px;
+    object-fit:contain;
   }
 `;
