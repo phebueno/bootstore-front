@@ -7,9 +7,10 @@ import logo from "../../images/Imagem-Raio-PNG.png";
 import CartProduct from "../CartProduct.js";
 import Header from "../Header.js";
 import { useNavigate } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
 
-export default function Cart({user, setUser}) {
-  const [cart, setCart] = useState([]);
+export default function Cart({ user, setUser }) {
+  const [cart, setCart] = useState();
   const [subTotal, setSubTotal] = useState(0);
   const [address, setAddress] = useState(null);
   const [open, setOpen] = useState("none");
@@ -27,9 +28,9 @@ export default function Cart({user, setUser}) {
 
   useEffect(() => {
     const userAuth = localStorage.getItem("userAuth");
-    if(!userAuth) return navigate("/sign-in");
-    const {token, userName} = JSON.parse(userAuth);    
-    if(!user) setUser(userName); //se mudar o caminho da sessão, tenta obter o usuário pelo localStorage
+    if (!userAuth) return navigate("/sign-in");
+    const { token, userName } = JSON.parse(userAuth);
+    if (!user) setUser(userName); //se mudar o caminho da sessão, tenta obter o usuário pelo localStorage
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -46,7 +47,7 @@ export default function Cart({user, setUser}) {
       })
       .catch((err) => {
         console.log(err.response);
-        if(err.response.status===401) navigate("/sign-in");
+        if (err.response.status === 401) navigate("/sign-in");
       });
   }, [user, setUser, navigate]);
 
@@ -73,7 +74,7 @@ export default function Cart({user, setUser}) {
   }
 
   function saveCart() {
-    const {token} = JSON.parse(localStorage.getItem("userAuth"));
+    const { token } = JSON.parse(localStorage.getItem("userAuth"));
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -92,7 +93,7 @@ export default function Cart({user, setUser}) {
   }
 
   function checkout() {
-    if(cart.length===0) return alert("Seu carrinho está vazio!");
+    if (cart.length === 0) return alert("Seu carrinho está vazio!");
     let address = prompt("Digite o endereço de entrega");
     while (!address) {
       alert("Endereço de entrega é obrigatorio");
@@ -109,7 +110,7 @@ export default function Cart({user, setUser}) {
 
   function confirmOrder() {
     setConfirm(true);
-    const {token} = JSON.parse(localStorage.getItem("userAuth"));
+    const { token } = JSON.parse(localStorage.getItem("userAuth"));
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -120,19 +121,19 @@ export default function Cart({user, setUser}) {
       delete object["url"];
     });
     console.log(cart);
-    const body = {address, productIdList: cart, total:Number(subTotal) };
+    const body = { address, productIdList: cart, total: Number(subTotal) };
     const url = `${URL_Base}/checkout`;
     axios
       .post(url, body, config)
       .then((res) => {
         console.log("OK!");
-        setTimeout(() => {          
-        window.location.reload(false);
+        setTimeout(() => {
+          window.location.reload(false);
         }, 3000);
       })
       .catch((err) => {
         console.log(err.response);
-        alert('Algo deu errado com o seu pedido! Tente novamente.')
+        alert("Algo deu errado com o seu pedido! Tente novamente.");
       });
   }
 
@@ -141,6 +142,7 @@ export default function Cart({user, setUser}) {
       <Header />
       <CartPageContent>
         <ProductList>
+          {!cart && <Oval color="#F07622" secondaryColor="#FEEC2C"/>}
           {cart && cart.length === 0 && <Aviso>Seu carinho está vazio!</Aviso>}
           {cart && cart.length > 0 && (
             <ProductsContainer>
@@ -211,11 +213,13 @@ export default function Cart({user, setUser}) {
             <p>{address}</p>
             <h1>Itens da entrega:</h1>
             <ul>
-              {cart.map((product, index) => (
-                <li key={index}>
-                  {product.qty}x {product.name}
-                </li>
-              ))}
+              {cart &&
+                cart.length > 0 &&
+                cart.map((product, index) => (
+                  <li key={index}>
+                    {product.qty}x {product.name}
+                  </li>
+                ))}
             </ul>
             <h1>Total:</h1>{" "}
             <p>
@@ -320,9 +324,10 @@ const Form = styled.form`
     font-family: "Bruno Ace SC", cursive;
     font-weight: bold;
   }
-  p, li{
+  p,
+  li {
     font-size: 20px;
-    margin-left:2%;
+    margin-left: 2%;
   }
 `;
 
@@ -396,6 +401,7 @@ const ProductList = styled.section`
   display: flex;
   //flex-direction:column;
   justify-content: center;
+  align-items:center;
 `;
 
 const Aviso = styled.div`
