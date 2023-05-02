@@ -49,9 +49,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-button{
-  all: unset;
-}
 `;
 
 export default ResetStyle;

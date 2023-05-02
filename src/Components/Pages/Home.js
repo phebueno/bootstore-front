@@ -25,6 +25,7 @@ export default function Home() {
           {products &&
             products.map((product) => (
               <ProductCard
+                id={product._id}
                 name={product.name}
                 img={product.url}
                 price={product.value}

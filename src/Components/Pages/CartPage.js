@@ -115,14 +115,20 @@ export default function Cart({user, setUser}) {
         Authorization: `Bearer ${token}`,
       },
     };
+    cart.forEach((object) => {
+      delete object["category"];
+      delete object["url"];
+    });
+    console.log(cart);
     const body = {address, productIdList: cart, total:Number(subTotal) };
     const url = `${URL_Base}/checkout`;
     axios
       .post(url, body, config)
       .then((res) => {
         console.log("OK!");
-        //Substituir por update local depois
+        setTimeout(() => {          
         window.location.reload(false);
+        }, 3000);
       })
       .catch((err) => {
         console.log(err.response);
