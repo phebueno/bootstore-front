@@ -4,18 +4,20 @@ import ProductCard from "../ProductCard.js";
 import { useEffect, useState } from "react";
 import REACT_APP_API_URL from "../../URL_Base.js";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
-export default function Home() {
+export default function HomeCategory() {
   const [products, setProducts] = useState([]);
+  const { category } = useParams();
 
   useEffect(() => {
     axios
-      .get(`${REACT_APP_API_URL}/home`)
+      .get(`${REACT_APP_API_URL}/home/${category}`)
       .then((res) => {
         setProducts(res.data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [category]);
 
   return (
     <>

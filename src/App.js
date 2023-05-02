@@ -1,6 +1,7 @@
 import SignIn from "./Components/Pages/Sign-In";
 import SignUp from "./Components/Pages/Sign-Up";
 import Home from "./Components/Pages/Home.js";
+import HomeCategory from "./Components/Pages/HomeCategory.js";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -9,7 +10,8 @@ function App() {
       <Routes>
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home/:category" element={<HomeCategory />} />
       </Routes>
     </BrowserRouter>
   );

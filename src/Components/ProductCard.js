@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export default function ProductCard() {
+export default function ProductCard(props) {
   return (
     <Container>
-      <ProductImage src="https://static.vecteezy.com/system/resources/previews/000/351/222/original/cell-phone-vector-icon.jpg" />
+      <ProductImage src={props.img} />
       <Description>
-        <p>Produto Teste</p>
-        <p>R$ 50,00</p>
+        <p>{props.name}</p>
+        <p>R$ {props.price}</p>
       </Description>
       <ToCart>Adiconar ao carrinho</ToCart>
     </Container>
