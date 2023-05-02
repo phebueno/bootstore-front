@@ -5,9 +5,17 @@ import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const navigate = useNavigate();
+  const lsDados = localStorage.getItem("userAuth")
 
   function navigateToSignIn() {
-    navigate("/sign-in");
+    if (lsDados) {
+      if (window.confirm("Voce deseja sair da sua conta?")) {
+        localStorage.removeItem("userAuth")
+        navigate("/sign-in")
+      }
+    } else {
+      navigate("/sign-in");
+    }
   }
 
   function navigateToAcessories() {
