@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import ResetStyle from './styles/ResetStyle.js';
-import GlobalStyle from './styles/GlobalStyle.js';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import ResetStyle from "./styles/ResetStyle.js";
+import GlobalStyle from "./styles/GlobalStyle.js";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ResetStyle />
@@ -12,4 +12,3 @@ root.render(
     <App />
   </React.StrictMode>
 );
-

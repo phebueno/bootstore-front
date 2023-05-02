@@ -1,8 +1,25 @@
 import styled from "styled-components";
 import Header from "../Header.js";
 import ProductCard from "../ProductCard.js";
+import { useEffect, useState } from "react";
+import { getProducts } from "../../services/api.js";
 
 export default function Home() {
+  const [products, setProducts] = useState();
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const res = await getProducts();
+        setProducts(res.data);
+      } catch (err) {
+        alert(err.response.data);
+      }
+    }
+    getData();
+    console.log(products);
+  }, []);
+
   return (
     <>
       <Header />
@@ -15,9 +32,7 @@ export default function Home() {
           <ProductCard />
           <ProductCard />
           <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {/* {products?.map(<ProductCard />)} */}
         </ProductsWrapper>
       </Content>
     </>
