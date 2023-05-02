@@ -4,12 +4,15 @@ import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
 import axios from "axios";
 import URL_Base from "../URL_Base.js";
+import { useNavigate } from "react-router-dom";
 
 export default function CartProduct({ product, increaseCounter, decreaseCounter }) {
   const { productId, name, qty, value } = product;
+  const navigate = useNavigate();
 
   function deleteProduct() {
-    const token = "tokensupersecretomelhorainda159951";
+    const {token} = JSON.parse(localStorage.getItem("userAuth"));
+    if(!token) navigate("/sign-in");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
